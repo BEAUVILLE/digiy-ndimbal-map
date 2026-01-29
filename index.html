@@ -1,1296 +1,493 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DIGIY NDIMBAL MAP — Saly Multi-QG × Modules ∞</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#061b14"/>
+  <meta name="color-scheme" content="dark"/>
+  <title>DIGIY HUB ∞ — Accès Modules</title>
+  <meta name="description" content="DIGIY HUB — Accès direct aux modules. 0% commission. Paiement direct au pro. Afrique souveraine."/>
+  <meta name="robots" content="index,follow"/>
 
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+  <!-- OpenGraph -->
+  <meta property="og:title" content="DIGIY HUB ∞"/>
+  <meta property="og:description" content="Accès direct aux modules DIGIYLYFE. 0% commission. Paiement direct."/>
+  <meta property="og:type" content="website"/>
 
-<style>
-  :root{
-    --bg:#020617;
-    --card:#030712;
-    --accent:#facc15;
-    --accent2:#22c55e;
-    --ink:#f9fafb;
-    --muted:#cbd5e1;
-    --border:rgba(148,163,184,0.35);
+  <style>
+    :root{
+      --bg:#061b14;
+      --card:#0b2a1f;
+      --card2:#0a241b;
+      --line:rgba(255,255,255,.12);
+      --text:#eafff1;
+      --muted:rgba(234,255,241,.72);
+      --gold:#facc15;
+      --green:#22c55e;
+      --orange:#f97316;
+      --red:#fb7185;
+      --shadow:0 18px 60px rgba(0,0,0,.38);
+      --r:20px;
+      --r2:14px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:radial-gradient(900px 520px at 15% -10%, rgba(34,197,94,.20), transparent 55%),
+               radial-gradient(820px 520px at 110% 0%, rgba(250,204,21,.12), transparent 55%),
+               var(--bg);
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height:1.35;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:18px 14px 44px}
+    .top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:10px 2px 16px;
+    }
+    .brand{display:flex; gap:12px; align-items:center}
+    .logo{
+      width:46px; height:46px; border-radius:16px;
+      background:linear-gradient(145deg, rgba(250,204,21,.16), rgba(34,197,94,.10));
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; letter-spacing:.5px;
+    }
+    .title{display:flex; flex-direction:column; gap:2px}
+    .title b{font-size:16px}
+    .title span{font-size:12px; color:var(--muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border:1px solid var(--line);
+      border-radius:999px; background:rgba(255,255,255,.04);
+      box-shadow:0 12px 30px rgba(0,0,0,.22);
+      font-size:12px; color:var(--muted);
+      white-space:nowrap;
+    }
+    .pill i{color:var(--gold); font-style:normal}
+    .hero{
+      margin-top:6px;
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .hero h1{margin:0 0 8px; font-size:18px}
+    .hero p{margin:0; color:var(--muted); font-size:13px}
+    .bar{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .search{
+      flex:1; min-width:220px;
+      display:flex; gap:10px; align-items:center;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.03);
+    }
+    .search input{
+      width:100%; outline:none; border:0; background:transparent;
+      color:var(--text); font-size:14px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      cursor:pointer;
+      user-select:none;
+      font-size:13px;
+    }
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btn.primary{
+      border-color:rgba(34,197,94,.45);
+      background:rgba(34,197,94,.12);
+    }
+    .btn.gold{
+      border-color:rgba(250,204,21,.35);
+      background:rgba(250,204,21,.10);
+    }
 
-    --qg-centre:#f97316;
-    --qg-station:#0ea5e9;
-    --qg-niakhal:#10b981;
-
-    --module-driver:#0ea5e9;
-    --module-resto:#f97316;
-    --module-loc:#10b981;
-    --module-market:#ec4899;
-    --module-build:#eab308;
-    --module-explore:#8b5cf6;
-    --module-jobs:#6366f1;
-  }
-
-  *{ box-sizing:border-box; margin:0; padding:0; }
-
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
-    color:var(--ink);
-    background:var(--bg);
-    overflow:hidden;
-  }
-
-  /* ============================================
-     📌 HEADER (COMPACT) — NE GÊNE PLUS LES CARDS
-  ============================================ */
-  .digiy-header{
-    background: linear-gradient(135deg, #facc15, #f97316);
-    color:#111;
-    padding:10px 12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    box-shadow: 0 4px 16px rgba(250,204,21,0.35);
-    position:relative;
-    z-index:1000;
-  }
-  .header-brand{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    min-width:0;
-  }
-  .brand-logo{
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    background: radial-gradient(circle at 30% 0%, #facc15, #f97316);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-    box-shadow:0 8px 18px rgba(250,204,21,0.35);
-    flex:0 0 auto;
-  }
-  .brand-text{ min-width:0; }
-  .brand-text h1{
-    font-size:16px;
-    font-weight:1000;
-    letter-spacing:.03em;
-    text-transform:uppercase;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .brand-text p{
-    font-size:11px;
-    opacity:.9;
-    font-weight:900;
-    margin-top:2px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-
-  .header-stats{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-  }
-  .stat-badge{
-    padding:6px 9px;
-    border-radius:9px;
-    background:rgba(0,0,0,0.25);
-    border:1px solid rgba(0,0,0,0.15);
-    font-size:11px;
-    font-weight:1000;
-    user-select:none;
-  }
-  .stat-btn{
-    padding:6px 9px;
-    border-radius:9px;
-    background:rgba(0,0,0,0.25);
-    border:1px solid rgba(0,0,0,0.15);
-    font-size:11px;
-    font-weight:1000;
-    cursor:pointer;
-    user-select:none;
-  }
-  .stat-btn:active{ transform:scale(.98); }
-  .stat-link{
-    text-decoration:none;
-    color:#111;
-    font-weight:1000;
-    background:rgba(255,255,255,0.35);
-    border:1px solid rgba(0,0,0,0.12);
-    padding:6px 9px;
-    border-radius:9px;
-  }
-
-  /* ============================================
-     🔍 PANNEAU RECHERCHE
-  ============================================ */
-  .search-panel{
-    position:absolute;
-    top:72px; /* header compact */
-    left:12px;
-    z-index:999;
-    background:var(--card);
-    border-radius:18px;
-    padding:14px;
-    box-shadow:0 16px 40px rgba(0,0,0,0.6);
-    border:1px solid var(--border);
-    width:360px;
-    max-width:calc(100vw - 24px);
-    transition:all .25s ease;
-  }
-
-  .search-toggle{
-    display:none;
-    position:absolute;
-    top:76px;
-    left:12px;
-    z-index:1000;
-    background:linear-gradient(135deg,var(--accent), #f97316);
-    color:#111;
-    border:none;
-    padding:10px 14px;
-    border-radius:14px;
-    font-weight:1000;
-    font-size:14px;
-    box-shadow:0 6px 16px rgba(250,204,21,0.35);
-    cursor:pointer;
-  }
-  .search-toggle:active{ transform:scale(0.95); }
-
-  .search-panel input, .search-panel select{
-    width:100%;
-    border:1px solid var(--border);
-    border-radius:12px;
-    background:rgba(15,23,42,0.8);
-    color:var(--ink);
-    margin-bottom:12px;
-  }
-  .search-panel input{
-    padding:12px 14px;
-    font-size:14px;
-    font-weight:900;
-  }
-  .search-panel input:focus{
-    outline:none;
-    border-color:var(--accent);
-    box-shadow:0 0 0 3px rgba(250,204,21,0.2);
-  }
-  .search-panel select{
-    padding:10px 12px;
-    font-size:13px;
-    cursor:pointer;
-    font-weight:900;
-  }
-
-  .filter-section{ margin-bottom:14px; }
-  .filter-label{
-    font-size:12px;
-    font-weight:1000;
-    color:var(--muted);
-    text-transform:uppercase;
-    letter-spacing:.05em;
-    margin-bottom:8px;
-    display:block;
-  }
-  .filter-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:8px;
-  }
-  .filter-btn{
-    padding:9px 10px;
-    border-radius:12px;
-    font-size:12px;
-    font-weight:1000;
-    cursor:pointer;
-    transition:all .2s;
-    border:2px solid transparent;
-    text-align:center;
-    user-select:none;
-  }
-  .filter-btn:hover{ transform:translateY(-2px); }
-
-  .filter-btn.all{
-    background:linear-gradient(135deg,var(--accent),#f97316);
-    color:#111;
-  }
-  .filter-btn.all.active{
-    border-color:#fff;
-    box-shadow:0 0 0 2px rgba(250,204,21,0.4);
-  }
-
-  .filter-btn.qg-centre{ background:var(--qg-centre); color:#fff; }
-  .filter-btn.qg-station{ background:var(--qg-station); color:#fff; }
-  .filter-btn.qg-niakhal{ background:var(--qg-niakhal); color:#fff; }
-  .filter-btn.qg-centre.active{ border-color:#fff; box-shadow:0 4px 12px rgba(249,115,22,0.55); }
-  .filter-btn.qg-station.active{ border-color:#fff; box-shadow:0 4px 12px rgba(14,165,233,0.55); }
-  .filter-btn.qg-niakhal.active{ border-color:#fff; box-shadow:0 4px 12px rgba(16,185,129,0.55); }
-
-  .filter-btn.module-driver{ background:var(--module-driver); color:#fff; }
-  .filter-btn.module-loc{ background:var(--module-loc); color:#fff; }
-  .filter-btn.module-market{ background:var(--module-market); color:#fff; }
-  .filter-btn.module-build{ background:var(--module-build); color:#fff; }
-  .filter-btn.module-explore{ background:var(--module-explore); color:#fff; }
-
-  .filter-btn.module-driver.active{ border-color:#fff; box-shadow:0 4px 12px rgba(14,165,233,0.55); }
-  .filter-btn.module-loc.active{ border-color:#fff; box-shadow:0 4px 12px rgba(16,185,129,0.55); }
-  .filter-btn.module-market.active{ border-color:#fff; box-shadow:0 4px 12px rgba(236,72,153,0.55); }
-  .filter-btn.module-build.active{ border-color:#fff; box-shadow:0 4px 12px rgba(234,179,8,0.55); }
-  .filter-btn.module-explore.active{ border-color:#fff; box-shadow:0 4px 12px rgba(139,92,246,0.55); }
-
-  .partner-count{
-    font-size:13px;
-    font-weight:1000;
-    color:var(--accent);
-    margin:8px 0 10px;
-    text-align:center;
-  }
-
-  .stats-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:6px;
-    margin-bottom:12px;
-  }
-  .stat-item{
-    padding:8px;
-    border-radius:10px;
-    text-align:center;
-    font-size:11px;
-    font-weight:1000;
-    color:#fff;
-  }
-
-  .partner-list{
-    max-height:260px;
-    overflow-y:auto;
-    margin-top:10px;
-    padding-top:10px;
-    border-top:1px solid var(--border);
-  }
-  .partner-item{
-    padding:12px;
-    margin:6px 0;
-    background:rgba(15,23,42,0.6);
-    border:1px solid var(--border);
-    border-left:4px solid var(--accent);
-    border-radius:12px;
-    cursor:pointer;
-    transition:all .2s ease;
-  }
-  .partner-item:hover{
-    background:rgba(15,23,42,0.9);
-    border-left-width:6px;
-    transform:translateX(4px);
-  }
-  .partner-item strong{
-    display:block;
-    font-size:15px;
-    margin-bottom:4px;
-    color:var(--ink);
-  }
-  .partner-item .desc{
-    font-size:12px;
-    color:var(--muted);
-    margin-bottom:6px;
-  }
-  .partner-badges{
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
-    margin-top:6px;
-  }
-  .badge{
-    display:inline-block;
-    font-size:10px;
-    padding:3px 8px;
-    border-radius:6px;
-    font-weight:1000;
-    color:#fff;
-  }
-  .badge.group{
-    background:rgba(250,204,21,.18);
-    border:1px solid rgba(250,204,21,.45);
-    color:#fde68a;
-  }
-
-  /* ============================================
-     🗺️ MAP
-  ============================================ */
-  #map{
-    position:absolute;
-    top:64px; /* header compact */
-    left:0; right:0; bottom:0;
-    z-index:1;
-  }
-
-  .digiy-marker{
-    background:linear-gradient(135deg,var(--accent),#f97316);
-    border:3px solid #fff;
-    border-radius:50% 50% 50% 0;
-    width:38px;
-    height:38px;
-    transform:rotate(-45deg);
-    box-shadow:0 4px 14px rgba(0,0,0,0.4);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:19px;
-  }
-  .digiy-marker span{ transform:rotate(45deg); }
-
-  .digiy-marker.module-driver{ background:var(--module-driver); }
-  .digiy-marker.module-resto{ background:var(--module-resto); }
-  .digiy-marker.module-loc{ background:var(--module-loc); }
-  .digiy-marker.module-market{ background:var(--module-market); }
-  .digiy-marker.module-build{ background:var(--module-build); }
-  .digiy-marker.module-explore{ background:var(--module-explore); }
-  .digiy-marker.module-jobs{ background:var(--module-jobs); }
-
-  .leaflet-popup-content-wrapper{
-    border-radius:18px;
-    padding:0;
-    overflow:hidden;
-    box-shadow:0 14px 36px rgba(0,0,0,0.3);
-    background:var(--card);
-  }
-  .leaflet-popup-content{
-    margin:0;
-    padding:18px;
-    min-width:300px;
-  }
-  .popup-header{
-    font-size:18px;
-    font-weight:1000;
-    margin-bottom:10px;
-    color:var(--accent);
-  }
-  .popup-badges{
-    display:flex;
-    gap:6px;
-    margin-bottom:12px;
-    flex-wrap:wrap;
-  }
-  .popup-badge{
-    padding:5px 10px;
-    border-radius:8px;
-    font-size:11px;
-    font-weight:1000;
-    color:#fff;
-  }
-  .popup-desc{
-    font-size:14px;
-    margin-bottom:12px;
-    color:var(--muted);
-    line-height:1.5;
-  }
-  .popup-price{
-    font-size:13px;
-    color:var(--accent2);
-    font-weight:1000;
-    margin-bottom:14px;
-  }
-  .popup-cta{ display:flex; gap:8px; }
-  .popup-btn{
-    flex:1;
-    padding:11px;
-    text-align:center;
-    text-decoration:none;
-    font-weight:1000;
-    font-size:13px;
-    border-radius:12px;
-    transition:all .2s ease;
-  }
-  .popup-btn.whatsapp{
-    background:rgba(34,197,94,0.2);
-    border:1px solid var(--accent2);
-    color:#bbf7d0;
-  }
-  .popup-btn.view{
-    background:linear-gradient(135deg,var(--accent),#f97316);
-    color:#111;
-    box-shadow:0 6px 16px rgba(250,204,21,0.35);
-  }
-  .popup-btn:hover{ transform:translateY(-2px); }
-
-  /* Mobile */
-  @media (max-width: 768px){
-    .header-stats{ display:none; }
-
-    .search-panel{
-      top:64px;
-      left:10px;
-      right:10px;
-      width:calc(100% - 20px);
-      max-width:none;
+    .grid{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:12px;
+    }
+    .card{
+      grid-column: span 12;
+      border:1px solid var(--line);
+      border-radius:var(--r);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
       padding:14px;
-      max-height:calc(100vh - 110px);
-      overflow-y:auto;
-      transform:translateY(-120%);
-      opacity:0;
-      pointer-events:none;
+      position:relative;
+      overflow:hidden;
+      cursor:pointer;
     }
-    .search-panel.open{
-      transform:translateY(0);
-      opacity:1;
-      pointer-events:all;
+    .card:hover{transform:translateY(-1px)}
+    .card:active{transform:translateY(0px)}
+    @media(min-width:720px){
+      .card{grid-column: span 6}
     }
-    .search-toggle{
-      display:block;
-      top:68px;
-      left:10px;
+    @media(min-width:980px){
+      .card{grid-column: span 4}
     }
-    .filter-grid{ gap:6px; }
-    #map{ top:64px; }
-    .leaflet-popup-content{ min-width:260px; padding:16px; }
-    .stats-grid{ grid-template-columns:repeat(2,1fr); }
-  }
-
-  .partner-list::-webkit-scrollbar{ width:6px; }
-  .partner-list::-webkit-scrollbar-track{
-    background:rgba(15,23,42,0.5);
-    border-radius:10px;
-  }
-  .partner-list::-webkit-scrollbar-thumb{
-    background:var(--accent);
-    border-radius:10px;
-  }
-
-  .hint{
-    font-size:12px;
-    opacity:.85;
-    line-height:1.35;
-    margin-top:6px;
-  }
-
-  /* Floating toggle (utile mobile/desktop) */
-  .loc-float-toggle{
-    position:absolute;
-    z-index:1200;
-    right:12px;
-    bottom:16px;
-    padding:10px 12px;
-    border-radius:999px;
-    background:rgba(2,6,23,.72);
-    color:#e5e7eb;
-    border:1px solid rgba(148,163,184,.35);
-    font-weight:1000;
-    cursor:pointer;
-    backdrop-filter: blur(10px);
-    box-shadow:0 14px 34px rgba(0,0,0,0.35);
-    user-select:none;
-  }
-  .loc-float-toggle:active{ transform:scale(.98); }
-</style>
+    .row{display:flex; align-items:flex-start; justify-content:space-between; gap:10px}
+    .name{display:flex; flex-direction:column; gap:4px}
+    .name b{font-size:15px}
+    .name span{font-size:12px; color:var(--muted)}
+    .tag{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:6px 10px; border-radius:999px;
+      font-size:11px; border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .tag.ok{border-color:rgba(34,197,94,.35); color:rgba(234,255,241,.9)}
+    .tag.warn{border-color:rgba(250,204,21,.28); color:rgba(234,255,241,.9)}
+    .tag.hot{border-color:rgba(249,115,22,.32); color:rgba(234,255,241,.9)}
+    .tag.bad{border-color:rgba(251,113,133,.35); color:rgba(234,255,241,.9)}
+    .meta{
+      margin-top:10px;
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .chip{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .chip strong{color:var(--text); font-weight:700}
+    .url{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(255,255,255,.16);
+      background:rgba(0,0,0,.18);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;
+      color:rgba(234,255,241,.82);
+      overflow:auto;
+    }
+    .foot{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .smalllink{color:rgba(234,255,241,.9); border-bottom:1px dashed rgba(255,255,255,.25)}
+    .toast{
+      position:fixed; left:50%; bottom:18px; transform:translateX(-50%);
+      background:rgba(11,42,31,.92);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 18px 60px rgba(0,0,0,.45);
+      padding:10px 12px;
+      border-radius:14px;
+      font-size:12px;
+      color:rgba(234,255,241,.92);
+      display:none;
+      max-width:min(720px, calc(100vw - 24px));
+    }
+  </style>
 </head>
 
 <body>
-
-<!-- HEADER -->
-<header class="digiy-header">
-  <div class="header-brand">
-    <div class="brand-logo">🗺️</div>
-    <div class="brand-text">
-      <h1>DIGIY NDIMBAL MAP</h1>
-      <p>Saly Multi-QG × Modules • 0% Commission ∞</p>
-    </div>
-  </div>
-
-  <div class="header-stats">
-    <a class="stat-link" href="https://digiylyfe.com" target="_blank" rel="noopener">← HUB</a>
-    <button class="stat-btn" type="button" onclick="locateMe()">📍 Moi</button>
-
-    <!-- ✅ LOC LIVE toggle -->
-    <button class="stat-btn
-
-" type="button" onclick="toggleLocLive()" id="btnLocLive">🏠 LOC LIVE: ON</button>
-
-    <div class="stat-badge" id="statPartners">—</div>
-  </div>
-</header>
-
-<!-- BOUTON TOGGLE MOBILE -->
-<button class="search-toggle" id="searchToggle" onclick="toggleSearch()">🔍 Rechercher</button>
-
-<!-- PANNEAU DE RECHERCHE -->
-<div class="search-panel" id="searchPanel">
-  <input type="search" id="searchInput" placeholder="🔍 Rechercher (nom, service, quartier...)" />
-
-  <select id="categoryFilter">
-    <option value="all">🌟 Toutes catégories</option>
-    <option value="hebergement">🏨 Hébergement</option>
-    <option value="market">🛒 Market & Style</option>
-    <option value="driver">🚗 Driver</option>
-    <option value="construction">🏗️ Bâtisseur</option>
-    <option value="explore">🌴 Explore</option>
-  </select>
-
-  <!-- Position manuelle -->
-  <div class="filter-section">
-    <span class="filter-label">📌 Position manuelle (lat / lng)</span>
-    <input id="latInput" inputmode="decimal" placeholder="Latitude (ex: 14.451800)" />
-    <input id="lngInput" inputmode="decimal" placeholder="Longitude (ex: -16.994600)" />
-    <div class="filter-grid" style="grid-template-columns:1fr 1fr;">
-      <div class="filter-btn all" onclick="setManualPos()">✅ Définir ma position</div>
-      <div class="filter-btn all" onclick="copyMyCoords()">📋 Copier mes coords</div>
-    </div>
-    <div class="hint">Astuce : clique <b>📍 Moi</b> (GPS), ça remplit automatiquement Lat/Lng.</div>
-  </div>
-
-  <!-- Distance autour de moi -->
-  <div class="filter-section">
-    <span class="filter-label">📏 Autour de moi</span>
-    <select id="distanceFilter">
-      <option value="all">∞ Tout</option>
-      <option value="1000">1 km</option>
-      <option value="3000">3 km</option>
-      <option value="5000">5 km</option>
-    </select>
-  </div>
-
-  <!-- Groupe -->
-  <div class="filter-section">
-    <span class="filter-label">👥 Groupe</span>
-    <select id="groupFilter">
-      <option value="all">∞ Tous</option>
-      <option value="team_joseph">Joseph (team)</option>
-      <option value="team_baptiste">Baptiste (team)</option>
-      <option value="team_lamine">Lamine (team)</option>
-    </select>
-  </div>
-
-  <!-- FILTRES QG -->
-  <div class="filter-section">
-    <span class="filter-label">📍 Par Quartier (QG)</span>
-    <div class="filter-grid">
-      <div class="filter-btn all active" data-type="qg" data-value="all" onclick="filterBy('qg','all')">∞ Tous</div>
-      <div class="filter-btn qg-centre" data-type="qg" data-value="centre" onclick="filterBy('qg','centre')">🏪 Centre</div>
-      <div class="filter-btn qg-station" data-type="qg" data-value="station" onclick="filterBy('qg','station')">🏖️ Station</div>
-      <div class="filter-btn qg-niakhal" data-type="qg" data-value="niakhal" onclick="filterBy('qg','niakhal')">🏡 Niakhal</div>
-    </div>
-  </div>
-
-  <!-- FILTRES MODULE -->
-  <div class="filter-section">
-    <span class="filter-label">🎯 Par Module DIGIY</span>
-    <div class="filter-grid">
-      <div class="filter-btn all active" data-type="module" data-value="all" onclick="filterBy('module','all')">∞ Tous</div>
-      <div class="filter-btn module-driver" data-type="module" data-value="DIGIY_DRIVER" onclick="filterBy('module','DIGIY_DRIVER')">🚗 DRIVER</div>
-      <div class="filter-btn module-loc" data-type="module" data-value="DIGIY_LOC" onclick="filterBy('module','DIGIY_LOC')">🏠 LOC</div>
-      <div class="filter-btn module-market" data-type="module" data-value="DIGIY_MARKET" onclick="filterBy('module','DIGIY_MARKET')">🛒 MARKET</div>
-      <div class="filter-btn module-build" data-type="module" data-value="DIGIY_BUILD" onclick="filterBy('module','DIGIY_BUILD')">🏗️ BUILD</div>
-      <div class="filter-btn module-explore" data-type="module" data-value="DIGIY_EXPLORE" onclick="filterBy('module','DIGIY_EXPLORE')">🌴 EXPLORE</div>
-    </div>
-  </div>
-
-  <div class="partner-count" id="partnerCount">—</div>
-  <div class="stats-grid" id="statsGrid"></div>
-  <div class="partner-list" id="partnerList"></div>
-</div>
-
-<!-- MAP -->
-<div id="map"></div>
-
-<!-- Floating toggle LOC (toujours visible) -->
-<button class="loc-float-toggle" id="locFloatToggle" type="button" onclick="toggleLocLive()">🏠 LOC LIVE</button>
-
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-
-<!-- ✅ Supabase JS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
-/* =========================================================
-   NDIMBAL MAP — V4 (COMPACT + GPS + LAT/LNG + DISTANCE)
-   + LAYER DIGIY LOC LIVE (Supabase views)
-   - v_ndimbal_loc (slug,title,whatsapp,address_label,lat,lng)
-   - v_loc_pin_occupancy_today (pin_slug,is_occupied_today)
-========================================================= */
-
-function toggleSearch(){
-  const panel=document.getElementById('searchPanel');
-  const button=document.getElementById('searchToggle');
-  if(panel.classList.contains('open')){ panel.classList.remove('open'); button.textContent='🔍 Rechercher'; }
-  else{ panel.classList.add('open'); button.textContent='✕ Fermer'; }
-}
-
-const SALY_JOSEPH = { name:"Saly Joseph", lat:14.4518, lng:-16.9946 };
-
-const QG_SALY = {
-  centre: { id:'centre', name:'QG Saly Centre', hub:'Astou Boutique', description:'Hub textile, market & artisanat', lat:14.4574, lng:-16.9984, color:'#f97316', emoji:'🏪' },
-  station:{ id:'station',name:'QG Saly Station',hub:'Chez Baptiste',description:'Hub hébergement, tourisme & loisirs',lat:14.4520,lng:-16.9920,color:'#0ea5e9',emoji:'🏖️' },
-  niakhal:{ id:'niakhal',name:'QG Niakh Niakhal',hub:'Garage Lamine',description:'Hub services, construction & transport',lat:14.4610,lng:-17.0050,color:'#10b981',emoji:'🏡' }
-};
-
-const DIGIY_MODULES = {
-  DIGIY_DRIVER:{ name:'DIGIY DRIVER', emoji:'🚗', color:'#0ea5e9' },
-  DIGIY_RESTO:{ name:'DIGIY RESTO', emoji:'🍽️', color:'#f97316' },
-  DIGIY_LOC:{ name:'DIGIY LOC', emoji:'🏠', color:'#10b981' },
-  DIGIY_MARKET:{ name:'DIGIY MARKET', emoji:'🛒', color:'#ec4899' },
-  DIGIY_BUILD:{ name:'DIGIY BUILD', emoji:'🏗️', color:'#eab308' },
-  DIGIY_EXPLORE:{ name:'DIGIY EXPLORE', emoji:'🌴', color:'#8b5cf6' },
-  DIGIY_JOBS:{ name:'DIGIY JOBS', emoji:'💼', color:'#6366f1' }
-};
-
-const partners = [
-  {
-    id:"astou", name:"🧵 Astou — Linge de maison", category:"market", module:"DIGIY_MARKET",
-    description:"Linge de maison & couture sur mesure", price:"Promo locale",
-    whatsapp:"https://wa.me/221778765785?text=Salam%20Astou%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaires-astou/",
-    icon:"🧵", keywords:"linge maison couture serviette drap saly", qg:"centre", isHub:true, group:"team_joseph"
-  },
-  {
-    id:"tonton-elhadji", name:"👜 Tonton Elhadji", category:"market", module:"DIGIY_MARKET",
-    description:"Sacs & montres — qualité premium", price:"Stock limité",
-    whatsapp:"https://wa.me/221778329612?text=Salam%20Tonton%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaire-tonton-elhadji/",
-    icon:"👜", keywords:"sacs montres accessoires saly", qg:"centre", group:"team_joseph"
-  },
-  {
-    id:"michel", name:"✂️ Michel — Styliste", category:"market", module:"DIGIY_MARKET",
-    description:"Robes personnalisées • Saly – Thiès", price:"Sur mesure",
-    whatsapp:"https://wa.me/221783718492?text=Salam%20Michel%20DIGIYLYFE",
-    link:"https://digiylyfe.com/page-partenaire-michel/",
-    icon:"✂️", keywords:"styliste couture robes saly", qg:"centre", group:"team_joseph"
-  },
-
-  {
-    id:"baptiste-saly", name:"🏝️ Chez Baptiste — Saly", category:"hebergement", module:"DIGIY_LOC",
-    description:"Appartement meublé 2 chambres", price:"30 000 FCFA / nuit",
-    whatsapp:"https://wa.me/221771342889?text=Salam%20Baptiste%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaires-chez-baptiste/",
-    icon:"🏝️", keywords:"appartement hebergement saly", qg:"station", isHub:true, group:"team_baptiste"
-  },
-  {
-    id:"daouda", name:"🌴 Daouda Explore", category:"explore", module:"DIGIY_EXPLORE",
-    description:"Guide local circuits authentiques", price:"Circuits sur mesure",
-    whatsapp:"https://wa.me/221771342889?text=Salam%20Daouda%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaires-daouda/",
-    icon:"🌴", keywords:"guide touristique circuit saly", qg:"station", group:"team_baptiste"
-  },
-
-  {
-    id:"lamine", name:"🚗 Lamine — Chauffeur", category:"driver", module:"DIGIY_DRIVER",
-    description:"Transferts AIBD et circuits", price:"Sur demande",
-    whatsapp:"https://wa.me/221784413680?text=Salam%20Lamine%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaires-lamine/",
-    icon:"🚗", keywords:"chauffeur taxi transport saly", qg:"niakhal", isHub:true, group:"team_lamine"
-  },
-  {
-    id:"zal", name:"⚡ Zal & Kourant — Électriciens", category:"construction", module:"DIGIY_BUILD",
-    description:"Électricité maison & bâtiment", price:"Devis rapide",
-    whatsapp:"https://wa.me/221772084781?text=Salam%20Zal%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaires-zal-kourant/",
-    icon:"⚡", keywords:"electricien electricite saly", qg:"niakhal", group:"team_lamine"
-  },
-  {
-    id:"helage", name:"💧 Helage — Plombier", category:"construction", module:"DIGIY_BUILD",
-    description:"Plomberie multi-services", price:"Sur demande",
-    whatsapp:"https://wa.me/221774513523?text=Salam%20Helage%20DIGIYLYFE",
-    link:"tel:+221774513523",
-    icon:"💧", keywords:"plombier plomberie saly", qg:"niakhal", group:"team_lamine"
-  },
-  {
-    id:"mbaye", name:"👷 Mbaye Diouf — Bâtisseur", category:"construction", module:"DIGIY_BUILD",
-    description:"Villas modernes, piscines", price:"Visite chantier",
-    whatsapp:"https://wa.me/221776427113?text=Salam%20Mbaye%20DIGIYLYFE",
-    link:"https://digiylyfe.com/partenaires-mbaye/",
-    icon:"👷", keywords:"batisseur villa construction saly", qg:"niakhal", group:"team_lamine"
-  }
-];
-
-/* =========================
-   SUPABASE (TES CLÉS)
-========================= */
-const SUPABASE_URL = "https://wesqmwjjtsefyjnluosj.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indlc3Ftd2pqdHNlZnlqbmx1b3NqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUxNzg4ODIsImV4cCI6MjA4MDc1NDg4Mn0.dZfYOc2iL2_wRYL3zExZFsFSBK6AbMeOid2LrIjcTdA";
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-let map, markers, allMarkers=[];
-let currentQGFilter='all';
-let currentModuleFilter='all';
-let meLayer=null;
-let mePos=null; // {lat,lng}
-let distanceMeters='all';
-let groupFilter='all';
-
-/* =========================
-   DIGIY LOC LIVE (Supabase)
-========================= */
-let locLiveEnabled = true;
-let locLiveCluster = null;
-let locLiveMarkers = [];
-let locLiveCount = 0;
-
-function digitsOnly(phone){
-  return String(phone || "").replace(/\D/g, "");
-}
-
-function openWaNumber(phone, message){
-  const txt = encodeURIComponent(message || "");
-  const digits = digitsOnly(phone);
-  if(!digits){
-    alert("Numéro WhatsApp manquant.");
-    return;
-  }
-  const url = "https://wa.me/" + digits + (txt ? "?text=" + txt : "");
-  window.open(url, "_blank", "noopener,noreferrer");
-}
-
-window.toggleLocLive = function(){
-  locLiveEnabled = !locLiveEnabled;
-
-  const btn = document.getElementById("btnLocLive");
-  const floatBtn = document.getElementById("locFloatToggle");
-
-  if(btn) btn.textContent = "🏠 LOC LIVE: " + (locLiveEnabled ? "ON" : "OFF");
-  if(floatBtn) floatBtn.textContent = "🏠 LOC LIVE: " + (locLiveEnabled ? "ON" : "OFF");
-
-  if(!locLiveCluster) return;
-
-  if(locLiveEnabled){
-    if(!map.hasLayer(locLiveCluster)) map.addLayer(locLiveCluster);
-  }else{
-    if(map.hasLayer(locLiveCluster)) map.removeLayer(locLiveCluster);
-  }
-};
-
-async function fetchLocOccupancyMap(){
-  const occ = new Map();
-  const { data, error } = await sb
-    .from("v_loc_pin_occupancy_today")
-    .select("pin_slug,is_occupied_today");
-
-  if(error){
-    console.warn("[LOC LIVE] occupancy view error:", error.message);
-    return occ;
-  }
-  (data || []).forEach(r=>{
-    const s = String(r.pin_slug || "").trim();
-    if(!s) return;
-    occ.set(s, !!r.is_occupied_today);
-  });
-  return occ;
-}
-
-function createLocLiveIcon(isOccupied){
-  const bg = isOccupied ? "#ef4444" : "#10b981"; // rouge occupé / vert dispo
-  const emoji = isOccupied ? "⛔" : "🏠";
-  const tip = isOccupied ? "Occupé" : "Disponible";
-  return L.divIcon({
-    className:'custom-marker',
-    html: `
-      <div class="digiy-marker module-loc" style="background:${bg};">
-        <span>${emoji}</span>
-      </div>
-      <div style="
-        position:absolute; transform:translate(-6px, -46px);
-        background:rgba(2,6,23,.85);
-        color:#e5e7eb;
-        border:1px solid rgba(148,163,184,.25);
-        border-radius:10px;
-        padding:2px 6px;
-        font:900 10px system-ui;
-        backdrop-filter: blur(8px);
-        white-space:nowrap;
-      ">${tip}</div>
-    `,
-    iconSize:[38,38], iconAnchor:[19,38], popupAnchor:[0,-38]
-  });
-}
-
-function createLocLivePopup(row, isOccupied){
-  const title = row.title || "Logement";
-  const label = row.address_label || "—";
-  const slug  = row.slug || "";
-  const wa    = row.whatsapp || "";
-  const pinUrl = "https://beauville.github.io/digiy-loc-pro/go-pin.html?slug=" + encodeURIComponent(slug);
-
-  const occBadge = isOccupied
-    ? `<span class="popup-badge" style="background:#ef4444">⛔ OCCUPÉ (aujourd’hui)</span>`
-    : `<span class="popup-badge" style="background:#10b981">✅ DISPONIBLE</span>`;
-
-  const waMsg = `Bonjour, je souhaite réserver / avoir des infos pour "${title}" via DIGIY LOC.`;
-
-  const waBtn = wa
-    ? `<a href="javascript:void(0)" onclick="openWaNumber('${esc(wa)}','${esc(waMsg)}')" class="popup-btn whatsapp">💬 WhatsApp</a>`
-    : `<a href="javascript:void(0)" onclick="alert('WhatsApp non renseigné sur ce PIN.');" class="popup-btn whatsapp">💬 WhatsApp</a>`;
-
-  return `
-    <div class="popup-header">${esc(title)}</div>
-    <div class="popup-badges">
-      <span class="popup-badge" style="background:${DIGIY_MODULES.DIGIY_LOC.color}">🏠 DIGIY LOC</span>
-      ${occBadge}
-    </div>
-    <div class="popup-desc">${esc(label)}</div>
-    <div class="popup-cta">
-      ${waBtn}
-      <a href="${pinUrl}" target="_blank" rel="noopener" class="popup-btn view">👀 Voir PIN</a>
-    </div>
-  `;
-}
-
-async function loadLocLivePins(){
-  if(!locLiveCluster){
-    locLiveCluster = L.markerClusterGroup({
-      spiderfyOnMaxZoom:true,
-      showCoverageOnHover:false,
-      zoomToBoundsOnClick:true
-    });
-  }
-
-  // clear old
-  try{ locLiveCluster.clearLayers(); }catch(e){}
-  locLiveMarkers = [];
-  locLiveCount = 0;
-
-  // fetch occupancy + pins
-  const occMap = await fetchLocOccupancyMap();
-
-  const { data, error } = await sb
-    .from("v_ndimbal_loc")
-    .select("slug,title,whatsapp,address_label,lat,lng");
-
-  if(error){
-    console.warn("[LOC LIVE] v_ndimbal_loc error:", error.message);
-    return;
-  }
-
-  (data || []).forEach(row=>{
-    const lat = Number(row.lat);
-    const lng = Number(row.lng);
-    if(!Number.isFinite(lat) || !Number.isFinite(lng)) return;
-
-    const slug = String(row.slug || "").trim();
-    const isOcc = occMap.get(slug) === true;
-
-    const marker = L.marker([lat,lng], { icon: createLocLiveIcon(isOcc) })
-      .bindPopup(createLocLivePopup(row, isOcc));
-
-    marker._latlngReal = {lat,lng};
-    marker.locLiveData = row;
-
-    locLiveMarkers.push(marker);
-    locLiveCluster.addLayer(marker);
-    locLiveCount++;
-  });
-
-  if(locLiveEnabled){
-    if(!map.hasLayer(locLiveCluster)) map.addLayer(locLiveCluster);
-  }else{
-    if(map.hasLayer(locLiveCluster)) map.removeLayer(locLiveCluster);
-  }
-
-  // petit feedback header
-  const stat = document.getElementById("statPartners");
-  if(stat){
-    stat.textContent = `${(partners || []).length} partenaires + ${locLiveCount} LOC`;
-  }
-
-  console.log("[LOC LIVE] loaded:", locLiveCount);
-}
-
-/* Auto refresh LOC LIVE (toutes les 60s) */
-setInterval(()=>{
-  if(typeof sb !== "undefined" && map) loadLocLivePins();
-}, 60000);
-
-/* =========================
-   Helpers existants
-========================= */
-function esc(s){
-  return String(s ?? '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;')
-    .replaceAll('"','&quot;')
-    .replaceAll("'","&#039;");
-}
-
-function jitter(lat,lng,meters=120){
-  const dLat=(Math.random()-0.5)*(meters/111320);
-  const dLng=(Math.random()-0.5)*(meters/(111320*Math.cos(lat*Math.PI/180)));
-  return [lat+dLat,lng+dLng];
-}
-
-function haversineMeters(a,b){
-  const R=6371000;
-  const toRad=(x)=>x*Math.PI/180;
-  const dLat=toRad(b.lat-a.lat);
-  const dLng=toRad(b.lng-a.lng);
-  const s1=Math.sin(dLat/2)**2;
-  const s2=Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;
-  return 2*R*Math.asin(Math.sqrt(s1+s2));
-}
-
-function addBackParam(url){
-  try{
-    if(url.startsWith('tel:')) return url;
-    const u = new URL(url, window.location.href);
-    u.searchParams.set('back', 'ndimbal');
-    u.searchParams.set('back_url', window.location.origin + '/');
-    return u.toString();
-  }catch(e){
-    return url;
-  }
-}
-
-(function(){
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', initAll);
-  else initAll();
-})();
-
-function initAll(){
-  if(typeof L==='undefined'){ setTimeout(initAll,100); return; }
-  initMap();
-  initSearch();
-  initMobileHandlers();
-
-  // fallback Joseph (réaliste) dès le départ
-  setMePos(SALY_JOSEPH.lat, SALY_JOSEPH.lng, true);
-
-  updateHeaderBadges(partners);
-  console.log('✅ NDIMBAL MAP V4 READY');
-
-  // ✅ Charge LOC LIVE (Supabase)
-  loadLocLivePins();
-}
-
-function initMap(){
-  const centerLat=(QG_SALY.centre.lat+QG_SALY.station.lat+QG_SALY.niakhal.lat)/3;
-  const centerLng=(QG_SALY.centre.lng+QG_SALY.station.lng+QG_SALY.niakhal.lng)/3;
-
-  map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([centerLat,centerLng],14);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© OpenStreetMap | DIGIYLYFE ∞', maxZoom:19
-  }).addTo(map);
-
-  markers=L.markerClusterGroup({ spiderfyOnMaxZoom:true, showCoverageOnHover:false, zoomToBoundsOnClick:true });
-
-  allMarkers=[];
-  partners.forEach((partner)=>{
-    const qgData=QG_SALY[partner.qg];
-
-    let lat,lng;
-    if(typeof partner.lat==="number" && typeof partner.lng==="number"){ lat=partner.lat; lng=partner.lng; }
-    else { [lat,lng]=jitter(qgData.lat,qgData.lng,120); }
-
-    const marker=L.marker([lat,lng],{ icon:createCustomIcon(partner.icon, partner.module) })
-      .bindPopup(createPopup(partner, qgData));
-
-    marker.partnerData=partner;
-    marker._latlngReal={lat,lng};
-    allMarkers.push(marker);
-    markers.addLayer(marker);
-  });
-
-  map.addLayer(markers);
-
-  // QG markers (∞)
-  Object.keys(QG_SALY).forEach((qgKey)=>{
-    const qg=QG_SALY[qgKey];
-    const qgPartners=partners.filter(p=>p.qg===qgKey);
-
-    L.marker([qg.lat,qg.lng],{
-      icon:L.divIcon({
-        className:'custom-marker',
-        html:'<div class="digiy-marker" style="width:52px;height:52px;border-width:4px;background:'+qg.color+';"><span style="font-size:28px;">∞</span></div>',
-        iconSize:[52,52], iconAnchor:[26,52], popupAnchor:[0,-52]
-      })
-    }).bindPopup(createQGPopup(qg,qgPartners)).addTo(map);
-  });
-}
-
-function createCustomIcon(icon,module){
-  const moduleClass=module.toLowerCase().replace('digiy_','module-');
-  return L.divIcon({
-    className:'custom-marker',
-    html:'<div class="digiy-marker '+moduleClass+'"><span>'+esc(icon)+'</span></div>',
-    iconSize:[38,38], iconAnchor:[19,38], popupAnchor:[0,-38]
-  });
-}
-
-function createPopup(partner,qgData){
-  const moduleData = DIGIY_MODULES[partner.module] || {name:partner.module,emoji:'♾️',color:'#64748b'};
-  const hubBadge = partner.isHub ? '<span class="popup-badge" style="background:#facc15;color:#111;">HUB</span>' : '';
-  const groupBadge = partner.group && partner.group !== 'all'
-    ? '<span class="popup-badge" style="background:rgba(250,204,21,.18);border:1px solid rgba(250,204,21,.45);color:#fde68a">👥 '+esc(partner.group.replace("team_",""))+'</span>'
-    : '';
-
-  const waBtn = partner.whatsapp
-    ? '<a href="'+partner.whatsapp+'" target="_blank" rel="noopener" class="popup-btn whatsapp">💬 WhatsApp</a>'
-    : '';
-
-  const viewUrl = addBackParam(partner.link);
-  const viewBtn = '<a href="'+viewUrl+'" target="_blank" rel="noopener" class="popup-btn view">🔎 Voir</a>';
-
-  return `
-    <div class="popup-header">${esc(partner.name)}</div>
-    <div class="popup-badges">
-      <span class="popup-badge" style="background:${qgData.color}">${qgData.emoji} ${esc(qgData.name)}</span>
-      <span class="popup-badge" style="background:${moduleData.color}">${moduleData.emoji} ${esc(moduleData.name)}</span>
-      ${hubBadge}
-      ${groupBadge}
-    </div>
-    <div class="popup-desc">${esc(partner.description)}</div>
-    ${partner.price ? '<div class="popup-price">💰 '+esc(partner.price)+'</div>' : ''}
-    <div class="popup-cta">
-      ${waBtn}
-      ${viewBtn}
-    </div>
-  `;
-}
-
-function createQGPopup(qg,qgPartners){
-  const hub=qgPartners.find(p=>p.isHub);
-  return `
-    <div class="popup-header">${esc(qg.emoji)} ${esc(qg.name)}</div>
-    <div class="popup-desc">${esc(qg.description)}</div>
-    ${hub ? '<div class="popup-price"><strong>Hub:</strong> '+esc(hub.name)+'</div>' : ''}
-    <div class="popup-desc">👥 ${qgPartners.length} partenaire${qgPartners.length>1?'s':''}</div>
-    <div class="popup-cta">
-      <a href="https://digiylyfe.com" target="_blank" rel="noopener" class="popup-btn view">🌐 DIGIYLYFE</a>
-    </div>
-  `;
-}
-
-/* ===========================
-   POSITION / LAT LNG
-=========================== */
-function parseNum(v){
-  const n = Number(String(v ?? '').trim().replace(',', '.'));
-  return Number.isFinite(n) ? n : null;
-}
-
-window.setManualPos = function(){
-  const lat=parseNum(document.getElementById('latInput')?.value);
-  const lng=parseNum(document.getElementById('lngInput')?.value);
-  if(lat===null || lng===null){
-    alert("Entre une latitude et une longitude valides (ex: 14.451800 et -16.994600).");
-    return;
-  }
-  setMePos(lat, lng, false);
-  if(meLayer) meLayer.openPopup();
-  document.getElementById('searchInput')?.dispatchEvent(new Event('input'));
-};
-
-window.copyMyCoords = async function(){
-  const latEl=document.getElementById('latInput');
-  const lngEl=document.getElementById('lngInput');
-  const lat = latEl?.value?.trim();
-  const lng = lngEl?.value?.trim();
-  if(!lat || !lng){
-    alert("D'abord clique 📍 Moi ou remplis Lat/Lng.");
-    return;
-  }
-  const text = `Lat: ${lat} | Lng: ${lng}`;
-  try{
-    await navigator.clipboard.writeText(text);
-    alert("Copié ✅ " + text);
-  }catch(e){
-    prompt("Copie manuelle :", text);
-  }
-};
-
-function setMePos(lat,lng,isFallback){
-  mePos={lat,lng};
-
-  if(meLayer){ try{ map.removeLayer(meLayer); }catch(e){} }
-
-  meLayer = L.circleMarker([lat,lng],{
-    radius:10, weight:2, color:"#22c55e", fillColor:"#22c55e", fillOpacity:0.25
-  }).addTo(map);
-
-  const label = isFallback ? "📍 Mode Joseph" : "📍 Toi ici";
-  meLayer.bindPopup(`<div style="font:900 12px system-ui;color:#bbf7d0;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.5);padding:8px 10px;border-radius:10px">${label}<br><span style="opacity:.85">Lat ${lat.toFixed(6)} • Lng ${lng.toFixed(6)}</span></div>`);
-
-  // Remplit les champs Lat/Lng automatiquement (super utile pour les abos)
-  const latEl=document.getElementById('latInput');
-  const lngEl=document.getElementById('lngInput');
-  if(latEl) latEl.value = String(lat.toFixed(6));
-  if(lngEl) lngEl.value = String(lng.toFixed(6));
-
-  map.setView([lat,lng], 15);
-}
-
-function locateMe(){
-  if(!navigator.geolocation){
-    alert("GPS non supporté. Mode Joseph.");
-    setMePos(SALY_JOSEPH.lat, SALY_JOSEPH.lng, true);
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(
-    (pos)=>{
-      setMePos(pos.coords.latitude, pos.coords.longitude, false);
-      if(meLayer) meLayer.openPopup();
-      document.getElementById('searchInput')?.dispatchEvent(new Event('input'));
-    },
-    ()=>{
-      alert("GPS refusé. Mode Joseph.");
-      setMePos(SALY_JOSEPH.lat, SALY_JOSEPH.lng, true);
-      document.getElementById('searchInput')?.dispatchEvent(new Event('input'));
-    },
-    {enableHighAccuracy:true, timeout:9000, maximumAge:30000}
-  );
-}
-
-/* ===========================
-   SEARCH & FILTRES
-=========================== */
-function initSearch(){
-  const searchInput=document.getElementById('searchInput');
-  const categoryFilter=document.getElementById('categoryFilter');
-  const distanceEl=document.getElementById('distanceFilter');
-  const groupEl=document.getElementById('groupFilter');
-
-  function normalizeText(t){
-    return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  }
-
-  function updateDisplay(){
-    const searchTerm=normalizeText(searchInput.value.trim());
-    const category=categoryFilter.value;
-    distanceMeters=distanceEl.value;
-    groupFilter=groupEl.value;
-
-    const filtered=partners.filter((p)=>{
-      const matchQG = (currentQGFilter==='all'||p.qg===currentQGFilter);
-      const matchModule = (currentModuleFilter==='all'||p.module===currentModuleFilter);
-      const matchCategory = (category==='all'||p.category===category);
-      const matchGroup = (groupFilter==='all'||p.group===groupFilter);
-
-      const matchSearch = !searchTerm ||
-        normalizeText(p.name+' '+p.description+' '+p.keywords).includes(searchTerm);
-
-      let matchDistance=true;
-      if(distanceMeters!=='all'){
-        const m=allMarkers.find(mm=>mm.partnerData.id===p.id);
-        const ll=m?m._latlngReal:null;
-        if(mePos && ll){
-          const d=haversineMeters({lat:mePos.lat,lng:mePos.lng},{lat:ll.lat,lng:ll.lng});
-          matchDistance = d <= Number(distanceMeters);
-        }else{
-          matchDistance=false;
-        }
-      }
-      return matchQG && matchModule && matchCategory && matchGroup && matchSearch && matchDistance;
-    });
-
-    document.getElementById('partnerCount').textContent =
-      `${filtered.length} partenaire${filtered.length>1?'s':''} • 3 QG • ${Object.keys(DIGIY_MODULES).length} modules`;
-
-    // Liste
-    const partnerList=document.getElementById('partnerList');
-    partnerList.innerHTML = filtered.map((p)=>{
-      const qgData=QG_SALY[p.qg];
-      const moduleData=DIGIY_MODULES[p.module]||{name:p.module,emoji:'♾️',color:'#64748b'};
-      const gBadge = (p.group && p.group!=='all') ? `<span class="badge group">👥 ${esc(p.group.replace('team_',''))}</span>` : '';
-      return `
-        <div class="partner-item" onclick="focusPartner('${p.id}')">
-          <strong>${esc(p.name)}</strong>
-          <div class="desc">${esc(p.description)}</div>
-          <div class="partner-badges">
-            <span class="badge" style="background:${qgData.color}">${qgData.emoji} ${esc(qgData.name)}</span>
-            <span class="badge" style="background:${moduleData.color}">${moduleData.emoji} ${esc(moduleData.name)}</span>
-            ${gBadge}
-          </div>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo">∞</div>
+        <div class="title">
+          <b>DIGIY HUB</b>
+          <span>Accès propre • 0% commission • Paiement direct</span>
         </div>
-      `;
-    }).join('');
+      </div>
+      <div class="pill"><i>🦅</i> Flow DIGIY • Porte stable • Pas de boucle</div>
+    </div>
 
-    // Markers
-    markers.clearLayers();
-    allMarkers.forEach((m)=>{
-      if(filtered.find(p=>p.id===m.partnerData.id)) markers.addLayer(m);
+    <div class="hero">
+      <h1>Choisis ton module, frère. On ouvre les portes, pas les boucles 🔒</h1>
+      <p>
+        Ce HUB ne fait <b>aucun redirect</b> automatique. Il ne “guard” pas. Il <b>pointe</b>.
+        Les guards et PIN vivent dans les modules, pas ici.
+      </p>
+
+      <div class="bar">
+        <div class="search">
+          <span style="opacity:.8">🔎</span>
+          <input id="q" type="text" placeholder="Cherche un module (loc, pay, build, market, explore, jobs…)"/>
+        </div>
+
+        <button class="btn gold" id="openNdimbal">🗺️ NDIMBAL MAP</button>
+        <button class="btn primary" id="openSupa">🚪 Supa APPS</button>
+        <button class="btn" id="copyHub">📎 Copier toutes les URLs</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <div class="foot">
+      <div>
+        Support WhatsApp (PIN reset LOC PRO) :
+        <span class="smalllink">+221 77 134 28 889</span>
+      </div>
+      <div>
+        Astuce : modifie les URLs dans <span class="smalllink">CONFIG.URLS</span> et c’est fini.
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ============================================================
+    // ✅ CONFIG — TOUTES LES URLS RÉELLES ICI (UNE SEULE ZONE)
+    // ============================================================
+    const CONFIG = {
+      // Domaine GitHub Pages principal
+      ROOT: "https://beauville.github.io",
+
+      // Portes stables (pages internes au HUB si tu veux)
+      PAGES: {
+        NDIMBAL_MAP: "https://beauville.github.io/ndimbal-map.html",
+        SUPA_APPS:   "https://beauville.github.io/supa-apps/" // <- dossier ou repo "supa-apps"
+      },
+
+      // Modules (recommandé: repos GitHub Pages par module)
+      URLS: {
+        HUB:         "https://beauville.github.io/",
+        PAY_START:   "https://beauville.github.io/commencer-a-payer/",
+        QR_PRO:      "https://beauville.github.io/digiy-qr-pro/",
+        LOC:         "https://beauville.github.io/digiy-loc/",
+        LOC_PRO:     "https://beauville.github.io/digiy-loc-pro/",
+        BUILD:       "https://beauville.github.io/digiy-build/",
+        BUILD_PRO:   "https://beauville.github.io/digiy-build-pro/",
+        MARKET:      "https://beauville.github.io/digiy-market/",
+        DRIVER:      "https://beauville.github.io/digiy-driver/",
+        EXPLORE:     "https://beauville.github.io/digiy-explore/",
+        JOBS:        "https://beauville.github.io/digiy-jobs/",
+        STORE_PRO:   "https://beauville.github.io/digiy-store-pro/",
+        DIGIYLYFE:   "https://beauville.github.io/digiylyfe.html"
+      }
+    };
+
+    // ============================================================
+    // ✅ DATA — CARDS HUB (ZÉRO BOUCLE, JUSTE DES LIENS)
+    // ============================================================
+    const MODULES = [
+      {
+        key:"PAY_START",
+        title:"DIGIY PAY",
+        desc:"Paiement direct (Wave/QR) • Activation rapide • 0% commission",
+        badge:{t:"Porte Paiement", c:"ok"},
+        chips:["Wave QR","Activation","Direct au pro"],
+        url: () => CONFIG.URLS.PAY_START
+      },
+      {
+        key:"QR_PRO",
+        title:"DIGIY QR PRO",
+        desc:"QR Business • accès rapide • vitrine + scan terrain",
+        badge:{t:"QR", c:"warn"},
+        chips:["Scan","Terrain","Rapide"],
+        // slug optionnel (safe)
+        url: () => CONFIG.URLS.QR_PRO
+      },
+      {
+        key:"LOC",
+        title:"DIGIY LOC",
+        desc:"Location directe propriétaire • sans commission",
+        badge:{t:"LOC", c:"ok"},
+        chips:["Listing","Fiches","Pulse"],
+        url: () => CONFIG.URLS.LOC
+      },
+      {
+        key:"LOC_PRO",
+        title:"DIGIY LOC PRO",
+        desc:"Espace Pro LOC • réservations • planning • pulses",
+        badge:{t:"PRO", c:"hot"},
+        chips:["PIN/Phone","Planning","Outbox"],
+        url: () => CONFIG.URLS.LOC_PRO
+      },
+      {
+        key:"BUILD",
+        title:"DIGIY BUILD",
+        desc:"Réseau artisans/BTP • demandes publiques • direct",
+        badge:{t:"BUILD", c:"ok"},
+        chips:["Demandes","Devis","Chantiers"],
+        url: () => CONFIG.URLS.BUILD
+      },
+      {
+        key:"BUILD_PRO",
+        title:"DIGIY BUILD PRO",
+        desc:"Cockpit Pro • demandes assignées • devis • messages",
+        badge:{t:"PRO", c:"hot"},
+        chips:["Guard","Quotes","Jobs"],
+        url: () => CONFIG.URLS.BUILD_PRO
+      },
+      {
+        key:"MARKET",
+        title:"DIGIY MARKET",
+        desc:"Marketplace/POS • ventes • livraison • payout",
+        badge:{t:"MARKET", c:"warn"},
+        chips:["POS","Sales","Payout"],
+        url: () => CONFIG.URLS.MARKET
+      },
+      {
+        key:"DRIVER",
+        title:"DIGIY DRIVER",
+        desc:"Transport/VTC • direct • réseau local",
+        badge:{t:"DRIVER", c:"warn"},
+        chips:["Courses","Zones","Direct"],
+        url: () => CONFIG.URLS.DRIVER
+      },
+      {
+        key:"EXPLORE",
+        title:"DIGIY EXPLORE",
+        desc:"Tourisme/Guides • apporteur d’affaires • Afrique",
+        badge:{t:"EXPLORE", c:"ok"},
+        chips:["Guides","Circuits","Boost"],
+        url: () => CONFIG.URLS.EXPLORE
+      },
+      {
+        key:"JOBS",
+        title:"DIGIY JOBS",
+        desc:"Dossiers • assistance • Dakar/France (cadre clean)",
+        badge:{t:"JOBS", c:"warn"},
+        chips:["Assistance","Employeurs","Accueil"],
+        url: () => CONFIG.URLS.JOBS
+      },
+      {
+        key:"STORE_PRO",
+        title:"DIGIY STORE PRO",
+        desc:"Progiciel commerçant • stock • ventes • caisse",
+        badge:{t:"PRO", c:"hot"},
+        chips:["Inventaire","Caisse","Stats"],
+        url: () => CONFIG.URLS.STORE_PRO
+      },
+      {
+        key:"DIGIYLYFE",
+        title:"DIGIYLYFE",
+        desc:"Vision • doctrine • modules • souveraineté numérique",
+        badge:{t:"∞", c:"ok"},
+        chips:["Écosystème","Afrique","Souveraineté"],
+        url: () => CONFIG.URLS.DIGIYLYFE
+      }
+    ];
+
+    // ============================================================
+    // UI Helpers
+    // ============================================================
+    const elGrid = document.getElementById("grid");
+    const elQ = document.getElementById("q");
+    const toast = document.getElementById("toast");
+
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = "block";
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=> toast.style.display="none", 1800);
+    }
+
+    function escapeHtml(s){
+      return (s||"").replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[m]));
+    }
+
+    function render(list){
+      elGrid.innerHTML = list.map(m => {
+        const url = m.url();
+        const badgeClass = m.badge?.c ? `tag ${m.badge.c}` : "tag";
+        const chips = (m.chips||[]).map(c => `<span class="chip"><strong>•</strong> ${escapeHtml(c)}</span>`).join("");
+        return `
+          <a class="card" href="${escapeHtml(url)}" target="_self" data-key="${escapeHtml(m.key)}" data-title="${escapeHtml(m.title)}" data-desc="${escapeHtml(m.desc)}">
+            <div class="row">
+              <div class="name">
+                <b>${escapeHtml(m.title)}</b>
+                <span>${escapeHtml(m.desc)}</span>
+              </div>
+              <span class="${badgeClass}">${escapeHtml(m.badge?.t || "MODULE")}</span>
+            </div>
+            <div class="meta">${chips}</div>
+            <div class="url">${escapeHtml(url)}</div>
+          </a>
+        `;
+      }).join("");
+    }
+
+    function filter(){
+      const q = (elQ.value||"").trim().toLowerCase();
+      if(!q){ render(MODULES); return; }
+      const out = MODULES.filter(m =>
+        (m.title||"").toLowerCase().includes(q) ||
+        (m.desc||"").toLowerCase().includes(q) ||
+        (m.key||"").toLowerCase().includes(q) ||
+        (m.chips||[]).join(" ").toLowerCase().includes(q)
+      );
+      render(out);
+    }
+
+    // ============================================================
+    // Actions
+    // ============================================================
+    document.getElementById("openNdimbal").addEventListener("click", () => {
+      // ✅ ndimbal-map corrigé: pointe vers une URL stable (interne HUB ou page)
+      location.href = CONFIG.PAGES.NDIMBAL_MAP;
     });
 
-    updateStats(filtered);
-    updateHeaderBadges(filtered);
-  }
+    document.getElementById("openSupa").addEventListener("click", () => {
+      // ✅ Supa APPS porte stable
+      location.href = CONFIG.PAGES.SUPA_APPS;
+    });
 
-  searchInput.addEventListener('input', updateDisplay);
-  categoryFilter.addEventListener('change', updateDisplay);
-  distanceEl.addEventListener('change', updateDisplay);
-  groupEl.addEventListener('change', updateDisplay);
-  updateDisplay();
-}
-
-window.filterBy = function(type,value){
-  if(type==='qg'){
-    currentQGFilter=value;
-    document.querySelectorAll('.filter-btn[data-type="qg"]').forEach(el=>el.classList.remove('active'));
-    const btn=document.querySelector('.filter-btn[data-type="qg"][data-value="'+value+'"]');
-    if(btn) btn.classList.add('active');
-    if(value!=='all'){
-      const qg=QG_SALY[value];
-      map.setView([qg.lat,qg.lng],16);
-    }
-  }else if(type==='module'){
-    currentModuleFilter=value;
-    document.querySelectorAll('.filter-btn[data-type="module"]').forEach(el=>el.classList.remove('active'));
-    const btn=document.querySelector('.filter-btn[data-type="module"][data-value="'+value+'"]');
-    if(btn) btn.classList.add('active');
-  }
-  document.getElementById('searchInput').dispatchEvent(new Event('input'));
-};
-
-window.focusPartner = function(id){
-  const m=allMarkers.find(mm=>mm.partnerData.id===id);
-  if(!m) return;
-  map.setView([m._latlngReal.lat, m._latlngReal.lng], 17);
-  m.openPopup();
-
-  if(window.innerWidth<=768){
-    const panel=document.getElementById('searchPanel');
-    const button=document.getElementById('searchToggle');
-    panel.classList.remove('open');
-    button.textContent='🔍 Rechercher';
-  }
-};
-
-function updateStats(list){
-  const qgStats={};
-  list.forEach(p=>{ qgStats[p.qg]=(qgStats[p.qg]||0)+1; });
-
-  const statsGrid=document.getElementById('statsGrid');
-  statsGrid.innerHTML = Object.keys(qgStats).map((qgKey)=>{
-    const qg=QG_SALY[qgKey];
-    return `<div class="stat-item" style="background:${qg.color}">${qg.emoji} ${qgStats[qgKey]}</div>`;
-  }).join('');
-}
-
-function updateHeaderBadges(list){
-  document.getElementById('statPartners').textContent = `${list.length} partenaires`;
-}
-
-function initMobileHandlers(){
-  if(window.innerWidth<=768){
-    document.getElementById('map').addEventListener('click', ()=>{
-      const panel=document.getElementById('searchPanel');
-      const button=document.getElementById('searchToggle');
-      if(panel.classList.contains('open')){
-        panel.classList.remove('open');
-        button.textContent='🔍 Rechercher';
+    document.getElementById("copyHub").addEventListener("click", async () => {
+      const lines = [
+        "DIGIY HUB — URLs",
+        ...Object.entries(CONFIG.URLS).map(([k,v]) => `${k}: ${v}`),
+        "",
+        "PAGES",
+        ...Object.entries(CONFIG.PAGES).map(([k,v]) => `${k}: ${v}`)
+      ];
+      try{
+        await navigator.clipboard.writeText(lines.join("\n"));
+        showToast("✅ URLs copiées. Tu peux coller dans ton réacteur.");
+      }catch(e){
+        showToast("⚠️ Copie bloquée par le navigateur. (Essaie HTTPS / autoriser presse-papier)");
       }
     });
-  }
-}
-</script>
 
+    elQ.addEventListener("input", filter);
+
+    // ============================================================
+    // Boot
+    // ============================================================
+    render(MODULES);
+
+    // ============================================================
+    // (Optionnel) Service Worker du HUB (safe): uniquement si présent
+    // - ne casse rien, ne redirige pas, pas de boucle.
+    // ============================================================
+    (function(){
+      if(!("serviceWorker" in navigator)) return;
+      const swUrl = "/sw.js"; // si tu l’as à la racine
+      fetch(swUrl, {cache:"no-store"})
+        .then(r => { if(!r.ok) throw 0; return navigator.serviceWorker.register(swUrl); })
+        .then(() => {/* ok */})
+        .catch(() => {/* pas de sw => pas grave */});
+    })();
+  </script>
 </body>
 </html>
+
