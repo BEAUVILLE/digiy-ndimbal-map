@@ -513,6 +513,159 @@
     color:#111827;
     border-color:rgba(250,204,21,.55);
   }
+
+  /* =========================================================
+     DIGIY NDIMBAL MAP — LECTEUR PUBLIC TERRAIN
+     Carte publique : écouter, comprendre, agir sans casser Leaflet.
+     ========================================================= */
+  .digiy-map-audio{
+    position:fixed;
+    right:14px;
+    bottom:calc(74px + env(safe-area-inset-bottom,0px));
+    z-index:1400;
+    width:min(390px,calc(100vw - 28px));
+    border-radius:22px;
+    border:1px solid rgba(250,204,21,.32);
+    background:rgba(2,6,23,.88);
+    color:#f9fafb;
+    box-shadow:0 18px 48px rgba(0,0,0,.46);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    overflow:hidden;
+  }
+
+  .digiy-map-audio-head{
+    padding:12px 13px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:10px;
+    background:linear-gradient(135deg,rgba(250,204,21,.16),rgba(34,197,94,.10));
+    border-bottom:1px solid rgba(148,163,184,.24);
+  }
+
+  .digiy-map-audio-title{
+    display:grid;
+    gap:3px;
+    min-width:0;
+  }
+
+  .digiy-map-audio-title strong{
+    font-size:14px;
+    line-height:1.2;
+    font-weight:1000;
+    color:#fde68a;
+  }
+
+  .digiy-map-audio-title span{
+    color:#cbd5e1;
+    font-size:12px;
+    line-height:1.35;
+    font-weight:850;
+  }
+
+  .digiy-map-audio-controls{
+    display:flex;
+    gap:7px;
+    flex:0 0 auto;
+  }
+
+  .digiy-map-audio-controls button{
+    min-height:38px;
+    border:none;
+    border-radius:999px;
+    padding:9px 11px;
+    font:1000 12px/1 system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;
+    cursor:pointer;
+    color:#111827;
+    background:linear-gradient(135deg,#facc15,#f97316);
+    box-shadow:0 10px 22px rgba(0,0,0,.20);
+  }
+
+  .digiy-map-audio-controls button.stop{
+    background:rgba(15,23,42,.86);
+    color:#e5e7eb;
+    border:1px solid rgba(148,163,184,.28);
+  }
+
+  .digiy-map-audio-body{
+    padding:11px 13px 12px;
+  }
+
+  .digiy-map-audio-body p{
+    margin:0;
+    color:#dbeafe;
+    font-size:12px;
+    line-height:1.48;
+    font-weight:850;
+  }
+
+  .digiy-map-audio-actions{
+    margin-top:9px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+  }
+
+  .digiy-map-audio-actions a{
+    min-height:36px;
+    border-radius:999px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 10px;
+    text-decoration:none;
+    color:#e5e7eb;
+    background:rgba(15,23,42,.78);
+    border:1px solid rgba(148,163,184,.24);
+    font-size:11px;
+    font-weight:1000;
+  }
+
+  .digiy-map-audio-actions a.primary{
+    background:linear-gradient(135deg,rgba(34,197,94,.95),rgba(250,204,21,.88));
+    color:#111827;
+    border-color:rgba(250,204,21,.35);
+  }
+
+  .digiy-map-audio-progress-wrap{
+    height:4px;
+    background:rgba(250,204,21,.16);
+    overflow:hidden;
+  }
+
+  .digiy-map-audio-progress{
+    width:0%;
+    height:100%;
+    background:linear-gradient(90deg,#facc15,#22c55e);
+    transition:width .18s linear;
+  }
+
+  .digiy-map-audio-status{
+    padding:0 13px 11px;
+    color:#cbd5e1;
+    font-size:11px;
+    font-weight:900;
+  }
+
+  @media(max-width:768px){
+    .digiy-map-audio{
+      left:10px;
+      right:10px;
+      bottom:calc(132px + env(safe-area-inset-bottom,0px));
+      width:auto;
+    }
+
+    .digiy-map-audio-head{
+      padding:10px;
+    }
+
+    .digiy-map-audio-controls button{
+      min-height:36px;
+      padding:8px 10px;
+    }
+  }
+
 </style>
 </head>
 
@@ -620,6 +773,34 @@
 </div>
 
 <div id="map"></div>
+
+
+<section class="digiy-map-audio" id="digiyMapAudio" aria-label="Lecteur public DIGIY NDIMBAL MAP">
+  <div class="digiy-map-audio-head">
+    <div class="digiy-map-audio-title">
+      <strong>🎧 Écouter la carte</strong>
+      <span>Comprendre les QG, les modules, les filtres et le contact direct.</span>
+    </div>
+    <div class="digiy-map-audio-controls">
+      <button id="digiyMapAudioPlay" type="button">▶️ Lecture</button>
+      <button class="stop" id="digiyMapAudioStop" type="button">⏹ Arrêt</button>
+    </div>
+  </div>
+  <div class="digiy-map-audio-body">
+    <p>
+      Carte publique : cherche un partenaire, filtre par quartier ou module, ouvre la fiche, puis contacte directement par WhatsApp.
+    </p>
+    <div class="digiy-map-audio-actions">
+      <a class="primary" href="https://wa.me/221771342889?text=Bonjour%20DIGIY%2C%20je%20viens%20de%20NDIMBAL%20MAP%20et%20je%20veux%20une%20information." target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+      <a href="sms:+221771342889?body=Bonjour%20DIGIY%2C%20je%20viens%20de%20NDIMBAL%20MAP%20et%20je%20veux%20une%20information.">✉️ SMS</a>
+    </div>
+  </div>
+  <div class="digiy-map-audio-progress-wrap" aria-hidden="true">
+    <div class="digiy-map-audio-progress" id="digiyMapAudioProgress"></div>
+  </div>
+  <div class="digiy-map-audio-status" id="digiyMapAudioStatus">Prêt à écouter.</div>
+</section>
+
 
 <button class="loc-float-toggle" id="locFloatToggle" type="button" onclick="toggleLocLive()">🏠 LOC LIVE: ON</button>
 
@@ -1307,5 +1488,191 @@ function initAll(){
 }
 </script>
 
+
+<script>
+/* =========================================================
+   DIGIY NDIMBAL MAP — Lecteur public avec doctrine audio
+   DIGIY = diji i ; BUILD = artisans tout corps de métiers
+========================================================= */
+(function(){
+  "use strict";
+
+  const playBtn = document.getElementById("digiyMapAudioPlay");
+  const stopBtn = document.getElementById("digiyMapAudioStop");
+  const progress = document.getElementById("digiyMapAudioProgress");
+  const status = document.getElementById("digiyMapAudioStatus");
+
+  if(!playBtn || !stopBtn || !progress || !status) return;
+
+  if(!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)){
+    playBtn.disabled = true;
+    stopBtn.disabled = true;
+    status.textContent = "Lecture vocale non disponible sur ce navigateur.";
+    return;
+  }
+
+  const audioText = `
+    Bienvenue sur DIGIY NDIMBAL MAP.
+    Cette carte publique montre les points utiles autour de Saly, les Q G, les partenaires et les modules du terrain.
+    Tu peux chercher un nom, un service ou un quartier.
+    Tu peux filtrer par Q G : centre, station ou Niakh Niakhal.
+    Tu peux aussi filtrer par module : DRIVER, LOC, MARKET, EXPLORE, JOBS, ou BUILD.
+    Ici, BUILD veut dire artisans tout corps de métiers : dépannage, entretien, travaux, chantier et services pratiques.
+    La carte peut utiliser ta position pour voir ce qui est proche de toi.
+    Le bouton LOC LIVE affiche les logements disponibles ou occupés quand l'information existe.
+    Quand un point t'intéresse, tu ouvres la fiche, tu regardes, puis tu contactes directement par WhatsApp.
+    DIGIY organise la route. Le professionnel garde son contact, son argent et sa relation client.
+    Zéro commission. Le terrain garde la main.
+  `;
+
+  const synth = window.speechSynthesis;
+  let playing = false;
+  let timer = null;
+  let launchId = 0;
+
+  function preparePronunciation(text){
+    return String(text || "")
+      .replace(/\bDIGIYLYFE\b/g, "diji i laïfe")
+      .replace(/\bDIGIY\b/g, "diji i")
+      .replace(/\bBUILD\b/g, "artisans tout corps de métiers")
+      .replace(/\bDRIVER\b/g, "driver")
+      .replace(/\bLOC\b/g, "loc")
+      .replace(/\bMARKET\b/g, "market")
+      .replace(/\bEXPLORE\b/g, "explore")
+      .replace(/\bJOBS\b/g, "jobs")
+      .replace(/\bNDIMBAL\b/g, "ndimbal")
+      .replace(/\bMAP\b/g, "map")
+      .replace(/\bQG\b/g, "Q G")
+      .replace(/\bQR\b/g, "Q R")
+      .replace(/\bGPS\b/g, "G P S")
+      .replace(/\bSMS\b/g, "S M S")
+      .replace(/\bWhatsApp\b/g, "Ouatsap")
+      .replace(/\bWave\b/g, "Ouève")
+      .replace(/0\s*%/g, "zéro pour cent");
+  }
+
+  function getFrenchVoice(){
+    const voices = synth.getVoices() || [];
+    return (
+      voices.find(v => /fr[-_]?FR/i.test(v.lang || "") && /google/i.test(v.name || "")) ||
+      voices.find(v => /fr[-_]?FR/i.test(v.lang || "")) ||
+      voices.find(v => /^fr/i.test(v.lang || "")) ||
+      null
+    );
+  }
+
+  function setIdle(message){
+    playing = false;
+    clearInterval(timer);
+    timer = null;
+    progress.style.width = "0%";
+    playBtn.disabled = false;
+    status.textContent = message || "Prêt à écouter.";
+  }
+
+  function setPlaying(){
+    playing = true;
+    playBtn.disabled = true;
+    status.textContent = "Lecture en cours…";
+  }
+
+  function stop(){
+    try{ synth.cancel(); }catch(_){}
+    setIdle("Lecture arrêtée.");
+  }
+
+  function startProgress(text, currentId){
+    const words = (text.match(/\S+/g) || []).length;
+    const estimated = Math.max(2500, words * 520);
+    let elapsed = 0;
+
+    clearInterval(timer);
+    progress.style.width = "0%";
+
+    timer = setInterval(() => {
+      if(!playing || currentId !== launchId){
+        clearInterval(timer);
+        timer = null;
+        return;
+      }
+      elapsed += 150;
+      progress.style.width = Math.min((elapsed / estimated) * 100, 97) + "%";
+    }, 150);
+  }
+
+  function launch(){
+    launchId += 1;
+    const currentId = launchId;
+    const spokenText = preparePronunciation(audioText);
+
+    try{ synth.cancel(); }catch(_){}
+
+    const utterance = new SpeechSynthesisUtterance(spokenText);
+    utterance.lang = "fr-FR";
+    utterance.rate = 0.84;
+    utterance.pitch = 1.02;
+    utterance.volume = 1;
+
+    const voice = getFrenchVoice();
+    if(voice) utterance.voice = voice;
+
+    utterance.onstart = () => {
+      if(currentId !== launchId) return;
+      setPlaying();
+      startProgress(spokenText, currentId);
+    };
+
+    utterance.onend = () => {
+      if(currentId !== launchId) return;
+      progress.style.width = "100%";
+      setTimeout(() => {
+        if(currentId === launchId) setIdle("Lecture terminée.");
+      }, 260);
+    };
+
+    utterance.onerror = () => {
+      if(currentId !== launchId) return;
+      setIdle("Lecture interrompue.");
+    };
+
+    synth.speak(utterance);
+  }
+
+  function play(){
+    if(playing) return;
+
+    const voices = synth.getVoices();
+    if(voices && voices.length){
+      launch();
+      return;
+    }
+
+    let started = false;
+    function handleVoices(){
+      if(started) return;
+      started = true;
+      synth.removeEventListener("voiceschanged", handleVoices);
+      launch();
+    }
+
+    synth.addEventListener("voiceschanged", handleVoices);
+    setTimeout(handleVoices, 700);
+  }
+
+  playBtn.addEventListener("click", play);
+  stopBtn.addEventListener("click", stop);
+
+  window.addEventListener("pagehide", stop);
+  document.addEventListener("visibilitychange", () => {
+    if(document.hidden && playing) stop();
+  });
+
+  window.DIGIY_MAP_AUDIO = { play, stop };
+
+  setIdle();
+})();
+</script>
+
 </body>
 </html>
+
